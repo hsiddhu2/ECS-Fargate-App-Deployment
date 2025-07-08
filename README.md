@@ -104,14 +104,14 @@ Test: `curl http://localhost:5000`
 
 ```bash
 # Get login token
-aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin YOUR_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com
+aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-west-2.amazonaws.com
 
 # Build and tag
 docker build -t ecs-fargate-demo .
-docker tag ecs-fargate-demo:latest YOUR_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest
+docker tag ecs-fargate-demo:latest 123456789012.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest
 
 # Push
-docker push YOUR_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest
+docker push 123456789012.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest
 ```
 
 ### 6. Create ECS Infrastructure
@@ -178,9 +178,9 @@ For automated deployment using Infrastructure as Code, use the provided CloudFor
 # Parameters - Update these values as needed
 PROJECT_NAME="ecs-fargate-demo"
 RESOURCE_SUFFIX="cf"
-IMAGE_URI="YOUR_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest"
-VPC_ID="vpc-xxxxxxxxx"
-SUBNET_IDS="subnet-xxxxxxxxx,subnet-yyyyyyyyy"
+IMAGE_URI="123456789012.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest"
+VPC_ID="vpc-0a1b2c3d4e5f67890"
+SUBNET_IDS="subnet-0a1b2c3d4e5f67890,subnet-0b2c3d4e5f6789012"
 DESIRED_COUNT="2"
 CONTAINER_CPU="256"
 CONTAINER_MEMORY="512"
@@ -218,9 +218,9 @@ aws cloudformation deploy \
     --parameter-overrides \
         ProjectName=ecs-fargate-demo \
         ResourceSuffix=cf \
-        ImageURI=YOUR_ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest \
-        VpcId=vpc-xxxxxxxxx \
-        SubnetIds=subnet-xxxxxxxxx,subnet-yyyyyyyyy \
+        ImageURI=123456789012.dkr.ecr.us-west-2.amazonaws.com/ecs-fargate-demo:latest \
+        VpcId=vpc-0a1b2c3d4e5f67890 \
+        SubnetIds=subnet-0a1b2c3d4e5f67890,subnet-0b2c3d4e5f6789012 \
         DesiredCount=2 \
         ContainerCpu=256 \
         ContainerMemory=512 \
